@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>login</title>
+	<style>
+		body {
+			margin: 0;
+			padding: 0;
+			font-family: sans-serif;
+			background-color: #cde3ae;
+		}
+
+		.container {
+			display: flex;
+			flex-direction: column;
+			align-items: center;
+			justify-content: center;
+			height: 100vh;
+		}
+
+		.login {
+			font-size: 48px;
+			font-weight: bold;
+			color: #2d2d2d;
+			margin-bottom: 40px;
+		}
+
+		.form {
+			display: flex;
+			flex-direction: column;
+			align-items: center;
+			background-color: #fff;
+			box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+			border-radius: 10px;
+			padding: 40px;
+			width: 500px;
+			max-width: 100%;
+		}
+
+		input[type="text"], input[type="password"] {
+			padding: 10px;
+			border-radius: 5px;
+			border: none;
+			border-bottom: 2px solid #ccc;
+			margin-bottom: 20px;
+			width: 100%;
+			font-size: 16px;
+			box-sizing: border-box;
+		}
+
+		input[type="text"]:focus, input[type="password"]:focus {
+			outline: none;
+			border-bottom: 2px solid #2d2d2d;
+		}
+
+		input[type="submit"] {
+			background-color: #1ed042;
+			color: #fff;
+			border: none;
+			border-radius: 5px;
+			padding: 10px 20px;
+			font-size: 16px;
+			cursor: pointer;
+		}
+
+		input[type="submit"]:hover {
+			background-color: #1f1f1f;
+		}
+    .login1{
+      color:#f9f9f9;
+      background-color: #1bd31e;
+    }
+
+		.error {
+			color: #ff0000;
+			font-size: 14px;
+			margin-top: 10px;
+		}
+	</style>
+</head>
+<body>
+	<div class="container">
+		<h1 class="login">Tony chat app</h1>
+		<form class="form" id="login-form">
+			<input type="text" id="username" name="username" placeholder="Username" required>
+			<input type="password" id="password" name="password" placeholder="Password" required>
+			<input class="login1" type="submit" value="Login">
+			<div id="error-message" class="error"></div>
+		</form>
+	</div>
+
+	<script>
+		const form = document.querySelector("#login-form");
+		const errorMessage = document.querySelector("#error-message");
+
+		form.addEventListener("submit", (e) => {
+			e.preventDefault();
+
+			const username = form.username.value.trim();
+			const password = form.password.value.trim();
+
+			if (username !== "nhoxinhcountry" || password !== "111111") {
+				errorMessage.textContent = "Incorrect username or password.";
+				return;
+			}
+
+			window.location.href = "/home";
+		});
+	</script>
+</body>
+</html>

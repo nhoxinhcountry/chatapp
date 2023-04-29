@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>home</title>
+	<style>
+		body {
+			margin: 0;
+			padding: 0;
+			font-family: sans-serif;
+			background-color: #f9f9f9;
+		}
+
+		.container {
+			display: flex;
+			flex-direction: column;
+			align-items: center;
+			justify-content: center;
+			height: 100vh;
+			background-color: rgb(231, 236, 227);
+		}
+
+		.logo {
+			font-size: 48px;
+			font-weight: bold;
+			color: #121212;
+			margin-bottom: 25px;
+			
+		}
+
+		.form {
+			display: flex;
+			flex-direction: column;
+			align-items: center;
+			background-color: #6fdd6f;
+			box-shadow: 0 2px rgb(120, 237, 130)rgba(0, 0, 0, 0.2);
+			border-radius: 5px;
+			padding: 40px;
+			width: 400px;
+			max-width: 90%;
+			background-color: #97e29c;
+		}
+
+		input[type="text"] {
+			padding: 10px;
+			border-radius: 5px;
+			border: 1px solid #ccc;
+			margin-bottom: 20px;
+			width: 100%;
+			font-size: 25px;
+			box-sizing: border-box;
+		}
+
+		input[type="submit"] {
+			background-color: #10cf4c;
+			color: white;
+			border: none;
+			border-radius: 10px;
+			padding: 10px 20px;
+			font-size: 20px;
+			cursor: pointer;
+		}
+		.username{
+			color: #360435;
+			font-size: 25px;
+		}
+		.username1{
+			font-size: 16px;
+			font-family: sans-serif;
+		}
+		.room{
+			color: #360435;
+			font-size: 25px;
+		}
+		.room1{
+			font-size: 16px;
+			font-family: sans-serif;
+			
+		}
+
+		input[type="submit"]:hover {
+			background-color: #76e183;
+		}
+
+		.error {
+			color: #ff0000;
+			font-size: 14px;
+			margin-top: 10px;
+		}
+	</style>
+</head>
+<body>
+	<div class="container">
+		<h1 class="logo">Tony Room</h1>
+		<form class="form" id="login-form">
+			<label  class="username" for="username">Username</label>
+			<input class="username1"  type="text" id="username" name="username" placeholder="username" required>
+			<label class="room" for="room">Room</label>
+			<input class="room1" type="text" id="room" name="room" placeholder="room" required>
+			<input type="submit" value="Join">
+			<div id="error-message" class="error"></div>
+		</form>
+	</div>
+
+	<script src="/socket.io/socket.io.js"></script>
+	<script>
+		const form = document.querySelector("#login-form");
+		const errorMessage = document.querySelector("#error-message");
+
+		form.addEventListener("submit", (e) => {
+			e.preventDefault();
+
+			const username = form.username.value.trim();
+			const room = form.room.value.trim();
+
+			if (!username || !room) {
+				errorMessage.textContent = "Please enter both a username and a room name.";
+				return;
+			}
+
+			window.location.href = `/chat?username=${username}&room=${room}`;
+		});
+	</script>
+</body>
+</html>

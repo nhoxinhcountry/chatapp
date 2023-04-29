@@ -1,0 +1,154 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>chat</title>
+	<style>
+		body {
+			font-family: Arial, sans-serif;
+			background-color: #f2f2f2;
+		}
+		.container {
+			margin: 50px auto;
+			padding: 20px;
+			background-color: #fff;
+			border-radius: 5px;
+			box-shadow: 0 0 10px rgba(0,0,0,0.2);
+			max-width: 500px;
+		}
+		h2 {
+			font-size: 28px;
+			margin-top: 0;
+			text-align: center;
+		}
+		form {
+			display: flex;
+			flex-direction: column;
+		}
+		label {
+			font-weight: bold;
+			margin-bottom: 10px;
+		}
+		input[type="text"],
+		textarea {
+			padding: 10px;
+			border-radius: 5px;
+			border: 1px solid #ccc;
+			margin-bottom: 20px;
+			font-size: 16px;
+			resize: none;
+		}
+		input[type="submit"] {
+			background-color: #4CAF50;
+			color: #fff;
+			border: none;
+			border-radius: 5px;
+			padding: 10px 20px;
+			font-size: 16px;
+			cursor: pointer;
+		}
+		input[type="submit"]:hover {
+			background-color: #3e8e41;
+		}
+		.chat-box {
+			background-color: #f2f2f2;
+			padding: 10px;
+			border-radius: 5px;
+			height: 300px;
+			overflow-y: scroll;
+			margin-bottom: 20px;
+		}
+		.chat-message {
+			background-color: #fff;
+			border-radius: 5px;
+			padding: 10px;
+			margin-bottom: 10px;
+		}
+		.chat-message:last-child {
+			margin-bottom: 0;
+		}
+		.chat-message p {
+			margin: 0;
+			font-size: 16px;
+		}
+		.chat-message.author p {
+			font-weight: bold;
+			color: #4CAF50;
+		}
+		.chat-message.user p {
+			font-weight: bold;
+			color: #f44336;
+		}
+	</style>
+</head>
+<body>
+	<div class="container">
+		<h2>Chat Room</h2>
+		<form>
+			<label for="name">Name:</label>
+			<input type="text" id="name" name="name" required>
+			<label for="message">Message:</label>
+			<textarea id="message" name="message" rows="5" required></textarea>
+			<input type="submit" value="Send">
+		</form>
+		<div class="chat-box">
+			<div class="chat-message author">
+				<p>Nam:</p>
+				<p>Good morning, what are you doing?</p>
+			</div>
+			<div class="chat-message user">
+				<p>Daisy:</p>
+				<p>Hi Nam,good morning, i'm doing exercise.How about you</p>
+			</div>
+			<div class="chat-message author">
+				<p>Nam:</p>
+				<p>Iam cooking my breakfast</p>
+			</div>
+			<div class="chat-message user">
+				<p>Daisy:</p>
+				<p>Wow that's great</p>
+      </div>
+      <div class="chat-message author">
+      <p>Nam:</p>
+      <p>Hmm, yes.</p>
+      </div>
+      </div>
+      </div>
+      <script src="/socket.io/socket.io.js"></script>
+  <script>
+    const socket = io();
+
+    // listen for incoming messages and add them to the chat box
+    socket.on("chat message", (msg) => {
+      const chatBox = document.querySelector(".chat-box");
+      const messageEl = document.createElement("div");
+      messageEl.classList.add("chat-message");
+      messageEl.classList.add("author");
+      messageEl.innerHTML = `
+        <p>${msg.name}:</p>
+        <p>${msg.message}</p>
+      `;
+      chatBox.appendChild(messageEl);
+    });
+
+    // send a message when the form is submitted
+    const form = document.querySelector("form");
+    form.addEventListener("submit", (e) => {
+      e.preventDefault();
+      const name = document.querySelector("#name").value;
+      const message = document.querySelector("#message").value;
+      socket.emit("chat message", { name, message });
+      document.querySelector("#message").value = "";
+      const chatBox = document.querySelector(".chat-box");
+      const messageEl = document.createElement("div");
+      messageEl.classList.add("chat-message");
+      messageEl.classList.add("user");
+      messageEl.innerHTML = `
+        <p>Me:</p>
+        <p>${message}</p>
+      `;
+      chatBox.appendChild(messageEl);
+    });
+  </script>
+      
+  </body>
+</html>
